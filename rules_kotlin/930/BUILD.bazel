@@ -1,0 +1,12 @@
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "define_kt_toolchain")
+load("@io_bazel_rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+
+define_kt_toolchain(
+    name = "kotlin_toolchain",
+    experimental_strict_kotlin_deps = "error",
+)
+
+kt_jvm_library(
+    name = "foo",
+    srcs = ["foo.kt"],
+)
