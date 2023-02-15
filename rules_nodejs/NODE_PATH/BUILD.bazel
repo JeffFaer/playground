@@ -1,0 +1,26 @@
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@npm//eslint:index.bzl", "eslint")
+
+filegroup(
+    name = "eslintrc",
+    srcs = [".eslintrc.yml"],
+    data = [
+        "@npm//eslint-config-google",
+    ],
+)
+
+eslint(
+    name = "eslint",
+    data = [":eslintrc"],
+    templated_args = [
+        "--config",
+        "$(rootpath :eslintrc)",
+    ],
+)
+
+sh_binary(
+    name = "eslint_sh",
+    srcs = ["eslint_wrapper.sh"],
+    args = ["$(rootpath :eslint)"],
+    data = [":eslint"],
+)
